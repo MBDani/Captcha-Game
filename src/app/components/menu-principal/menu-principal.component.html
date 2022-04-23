@@ -1,0 +1,46 @@
+<div class="container">
+    <h1 class="text-center">Menú Principal</h1>
+    <p class="text-center">Explicación del juego (hacer carousel)</p>
+
+    <div *ngIf="mostrarAlerta" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Rellena todos los campos por favor.</strong>
+        <button type="button" class="btn-close" aria-label="Close" (click)="ocultarAlerta()"></button>
+    </div>
+    <form action="submit" class="mx-auto col-6" [formGroup]="formJugar" (ngSubmit)="jugar()">
+        <div class="form-group">
+            <label for="" class="form-label">Imagen correcta</label>
+            <input type="text" class="form-control " name="imagen_correcta" id="imagen_correcta"
+                formControlName="imagen_correcta" placeholder="ex: gato" required
+                [ngClass]="{'is-invalid': getPintaErrores('imagen_correcta')}">
+            <app-errores-formulario *ngIf="getPintaErrores('imagen_correcta')" [elemento]="'Imagen Correcta'">
+            </app-errores-formulario>
+        </div>
+
+        <div class="form-group">
+
+            <label for="" class="form-label">Imagen incorrecta</label>
+            <input type="text" class="form-control" name="imagen_incorrecta" id="imagen_incorrecta"
+                formControlName="imagen_incorrecta" placeholder="ex: perro" required
+                [ngClass]="{'is-invalid': getPintaErrores('imagen_incorrecta')}">
+            <app-errores-formulario *ngIf="getPintaErrores('imagen_incorrecta')" [elemento]="'Imagen Incorrecta'">
+            </app-errores-formulario>
+        </div>
+        <div class="form-group">
+            <label for="" class="form-label">Tiempo</label>
+            <!-- <input type="time" class="form-control" name="tiempo" id="tiempo" formControlName="tiempo"> -->
+            <!-- <input type="number" class="form-control" name="tiempo" id="tiempo" formControlName="tiempo"> -->
+            <select type="number" class="form-select" name="tiempo" id="tiempo" formControlName="tiempo">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+            </select>
+            <app-errores-formulario *ngIf="getPintaErrores('tiempo')" [elemento]="'Tiempo'"></app-errores-formulario>
+        </div>
+        <div class="mx-auto text-center">
+            <input type="submit" class="btn btn-primary btn-block mt-2" value="¡Jugar!">
+        </div>
+    </form>
+</div>
