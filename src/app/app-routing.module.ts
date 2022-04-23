@@ -6,8 +6,8 @@ import { PantallaComponent } from './components/pantalla/pantalla.component';
 const routes: Routes = [
   // { path: '', component: MenuPrincipalComponent},
   { path: 'menu-principal', component: MenuPrincipalComponent},
-  // { path: 'pantalla/:correct_data/:incorrect_data/:tiempo', component: PantallaComponent},
-  { path: 'pantalla', component: PantallaComponent},
+  { path: 'pantalla/:correct_data/:incorrect_data/:tiempo', component: PantallaComponent},
+  // { path: 'pantalla', component: PantallaComponent},
   {path: '**', redirectTo: 'menu-principal'} 
 
 ];

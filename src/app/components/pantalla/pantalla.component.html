@@ -6,9 +6,6 @@
     <section class="gallery__container">
         <figure *ngFor="let foto of fotos_mezcladas">
             <img [src]="foto.url" class="gallery__img" [ngClass]="{marcado: foto.marcada}" (click)="photoClicked(foto)">
-            <!-- <span (click)="photoClicked(foto)" class="foto__boton" [disabled]="juegoTerminado">
-                <img [src]="foto.url" class="gallery__img" [ngClass]="{marcado: foto.marcada}">
-            </span> -->
         </figure>
     </section>
     <div class="text-center">

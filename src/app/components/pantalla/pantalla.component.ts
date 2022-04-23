@@ -20,9 +20,12 @@ export class PantallaComponent implements OnInit {
 
   contadorIDs: number = 0;
 
+  tiempo: number = 0;
   tiempoRestante: number = 999;
 
   juegoTerminado: boolean = false;
+
+  puntosMaximos: number = 0;
 
   mockFotosCorrectas: any =
     [
@@ -156,8 +159,8 @@ export class PantallaComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    // this.obtenerDatosExternos();
-    this.mockearFotos();
+    this.obtenerDatosExternos();
+    // this.mockearFotos();
 
     console.log(this.fotos_correctas);
     console.log(this.fotos_incorrectas);
@@ -178,8 +181,8 @@ export class PantallaComponent implements OnInit {
     const correct_data = JSON.parse(this.activatedRoute.snapshot.paramMap.get('correct_data') || '{}');
     const incorrect_data = JSON.parse(this.activatedRoute.snapshot.paramMap.get('incorrect_data') || '{}');
 
-    const tiempo = this.activatedRoute.snapshot.params['tiempo'];
-    this.tiempoRestante = Number(tiempo);
+    this.tiempo = Number(this.activatedRoute.snapshot.params['tiempo']);
+    this.tiempoRestante = this.tiempo;
 
     this.palabra_correcta = correct_data.meta.keyword;
     this.palabra_incorrecta = incorrect_data.meta.keyword;
@@ -214,11 +217,12 @@ export class PantallaComponent implements OnInit {
     if (this.juegoTerminado !== true) {
       this.juegoTerminado = true;
 
-      const acertados = this.fotos_correctas.filter((foto: IFoto) => foto.marcada == true).length;
+      const aciertos = this.fotos_correctas.filter((foto: IFoto) => foto.marcada == true).length;
+      const puntos = this.calcularPuntosFinales(aciertos);
 
       Swal.fire({
-        title: `<strong>${this.palabra_correcta}</strong>`,
-        html: `¡Has acertado <b> ${acertados}/${this.fotos_correctas.length}</b>!`,
+        title: `<h1>¡Has conseguido ${puntos}/${this.puntosMaximos}</h1><strong>${this.palabra_correcta}</strong>`,
+        html: `¡Has acertado <b> ${aciertos}/${this.fotos_correctas.length}</b>!`,
         imageUrl: this.fotos_correctas[0].url,
         imageWidth: 200,
         imageHeight: 200,
@@ -231,6 +235,25 @@ export class PantallaComponent implements OnInit {
         }
       })
     }
+  }
+
+  calcularPuntosFinales(aciertos: number): number{
+    switch(this.tiempo){
+      case 10: this.puntosMaximos = 1000;
+      break;
+      case 20: this.puntosMaximos = 800;
+      break;
+      case 30: this.puntosMaximos = 600;
+      break;
+      case 40: this.puntosMaximos = 400;
+      break;
+      case 50: this.puntosMaximos = 200;
+      break;
+      case 60: this.puntosMaximos = 100;
+      break;
+    }
+    
+    return this.puntosMaximos * aciertos / 10 //el 10 representa el número máximo de aciertos
   }
 
   inicializarContador() {
