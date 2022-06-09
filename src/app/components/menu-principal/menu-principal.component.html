@@ -1,6 +1,4 @@
-<div class="container">
-    <h1 class="text-center">Menú Principal</h1>
-    <p class="text-center">Explicación del juego (hacer carousel)</p>
+<div class="container pt-3">
 
     <div *ngIf="mostrarAlerta" class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Rellena todos los campos por favor.</strong>
@@ -38,7 +36,7 @@
             <app-errores-formulario *ngIf="getPintaErrores('tiempo')" [elemento]="'Tiempo'"></app-errores-formulario>
         </div>
         <div class="mx-auto text-center">
-            <input type="submit" class="btn btn-primary btn-block mt-2" value="¡Jugar!">
+            <input type="submit" class="btn btn-primary btn-block mt-2" value="¡JUGAR!">
         </div>
     </form>
 </div>

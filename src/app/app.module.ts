@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
 import { PantallaComponent } from './components/pantalla/pantalla.component';
 import { ErroresFormularioComponent } from './components/menu-principal/errores-formulario/errores-formulario.component';
+import { CabeceraComponent } from './components/cabecera/cabecera.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ErroresFormularioComponent } from './components/menu-principal/errores-
     MenuPrincipalComponent,
     PantallaComponent,
     ErroresFormularioComponent,
+    CabeceraComponent,
   ],
   imports: [
     BrowserModule,

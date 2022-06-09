@@ -1,0 +1,15 @@
+.cabecera {
+    text-align: center;
+    font-family: Arial Black;
+    font-weight: bold;
+    font-size: 4em;
+    color: #2fa4e7;
+    text-shadow: 0 1px 0 #2b93d0, 0 2px 0 #257eb2, 0 3px 0 #206c98, 0 4px 0 #174e6e, 0 5px 0 #144662, 0 6px 1px rgba(0, 0, 0, 0.1),
+        0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
+        0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+}
+
+h1:hover{
+    color: #35b4fd;
+}

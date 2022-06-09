@@ -1,14 +1,17 @@
 <main class="gallery">
-    <h2 class="gallery__title">
+    <p class="gallery__title">
         Selecciona las imagenes que contengan "{{palabra_correcta}}"
-        <span class="stopwatch"> {{tiempoRestante}} <i class="fas fa-stopwatch"></i> </span>
-    </h2>
+    </p>
+    <span class="stopwatch"> {{tiempoRestante}} <i class="fas fa-stopwatch"></i> </span>
     <section class="gallery__container">
         <figure *ngFor="let foto of fotos_mezcladas">
             <img [src]="foto.url" class="gallery__img" [ngClass]="{marcado: foto.marcada}" (click)="photoClicked(foto)">
         </figure>
     </section>
     <div class="text-center">
-        <button class="btn btn-primary" (click)="darResultado()" [disabled]="juegoTerminado">¡Comprobar!</button>
+        <button *ngIf="!juegoTerminado else verResultado" class="btn btn-primary" (click)="darResultado()">¡COMPROBAR!</button>
+        <ng-template #verResultado>
+            <button class="btn btn-primary" (click)="popUpResultado()">VER RESULTADO</button>
+        </ng-template>
     </div>
 </main>

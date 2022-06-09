@@ -12,6 +12,8 @@ export class MenuPrincipalComponent implements OnInit {
   formJugar: FormGroup;
   mostrarAlerta: boolean = false
 
+  carouselImagenes: string[] = [];
+
 
   constructor(private router: Router,
     private unsplashService: UnsplashService) {
@@ -24,6 +26,8 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.rellenarCarousel();
   }
 
   jugar(): void {
@@ -51,6 +55,13 @@ export class MenuPrincipalComponent implements OnInit {
   
   ocultarAlerta(){
     this.mostrarAlerta = false
+  }
+
+  rellenarCarousel(){
+    const url = '../../../assets/imagenes/carousel/'
+    this.carouselImagenes.push(`${url}menu-principal.png`)
+    this.carouselImagenes.push(`${url}juego.png`)
+    this.carouselImagenes.push(`${url}puntuaciones.png`)
   }
 
 }

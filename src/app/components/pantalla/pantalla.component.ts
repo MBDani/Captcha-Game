@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UnsplashService } from '../servicios/unsplash.service';
 import { IFoto } from './models/fotos.models';
@@ -9,7 +9,7 @@ import { timer } from 'rxjs';
   templateUrl: './pantalla.component.html',
   styleUrls: ['./pantalla.component.scss']
 })
-export class PantallaComponent implements OnInit {
+export class PantallaComponent implements OnInit, OnDestroy {
 
   fotos_correctas: IFoto[] = [];
   fotos_incorrectas: IFoto[] = [];
@@ -26,6 +26,11 @@ export class PantallaComponent implements OnInit {
   juegoTerminado: boolean = false;
 
   puntosMaximos: number = 0;
+  puntosARestar: number = 0;
+
+  puntos: number = 0; 
+  aciertos : number = 0;
+  errores: number = 0;
 
   mockFotosCorrectas: any =
     [
@@ -158,6 +163,7 @@ export class PantallaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
+
   ngOnInit(): void {
     this.obtenerDatosExternos();
     // this.mockearFotos();
@@ -216,44 +222,62 @@ export class PantallaComponent implements OnInit {
   darResultado(): void {
     if (this.juegoTerminado !== true) {
       this.juegoTerminado = true;
+      this.aciertos = this.fotos_correctas.filter((foto: IFoto) => foto.marcada == true).length;
+      this.errores = this.fotos_incorrectas.filter((foto: IFoto) => foto.marcada == true).length;
+      this.puntos = this.calcularPuntosFinales(this.aciertos);
 
-      const aciertos = this.fotos_correctas.filter((foto: IFoto) => foto.marcada == true).length;
-      const puntos = this.calcularPuntosFinales(aciertos);
-
-      Swal.fire({
-        title: `<h1>¡Has conseguido ${puntos}/${this.puntosMaximos}</h1><strong>${this.palabra_correcta}</strong>`,
-        html: `¡Has acertado <b> ${aciertos}/${this.fotos_correctas.length}</b>!`,
-        imageUrl: this.fotos_correctas[0].url,
-        imageWidth: 200,
-        imageHeight: 200,
-        imageAlt: this.palabra_correcta,
-        showCloseButton: true,
-        confirmButtonText: 'Volver al menú principal',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(['/menu-principal'])
-        }
-      })
+      this.popUpResultado();
     }
   }
 
-  calcularPuntosFinales(aciertos: number): number{
-    switch(this.tiempo){
-      case 10: this.puntosMaximos = 1000;
+   popUpResultado() {
+    Swal.fire({
+      title: `<h1>¡Has conseguido ${this.puntos}/${this.puntosMaximos}</h1><strong>${this.palabra_correcta}</strong>`,
+      html: `¡Has acertado <b> ${this.aciertos}/${this.fotos_correctas.length}</b>!<br>
+      ¡Has fallado <b> ${this.errores}/${this.fotos_incorrectas.length}</b>!`,
+      imageUrl: this.fotos_correctas[0].url,
+      imageWidth: 200,
+      imageHeight: 200,
+      imageAlt: this.palabra_correcta,
+      showCloseButton: true,
+      confirmButtonText: 'Volver al menú principal',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/menu-principal']);
+      }
+    });
+  }
+
+  calcularPuntosFinales(aciertos: number): number {
+    switch (this.tiempo) {
+      case 10: 
+      this.puntosMaximos = 1000;
+      this.puntosARestar = 100;
       break;
-      case 20: this.puntosMaximos = 800;
+      case 20: 
+      this.puntosMaximos = 800;
+      this.puntosARestar = 80;
       break;
-      case 30: this.puntosMaximos = 600;
+      case 30: 
+      this.puntosMaximos = 600;
+      this.puntosARestar = 60;
       break;
-      case 40: this.puntosMaximos = 400;
+      case 40: 
+      this.puntosMaximos = 400;
+      this.puntosARestar = 40;
       break;
-      case 50: this.puntosMaximos = 200;
+      case 50: 
+      this.puntosMaximos = 200;
+      this.puntosARestar = 20;
       break;
-      case 60: this.puntosMaximos = 100;
-      break;
+      case 60: 
+      this.puntosMaximos = 100;
+      this.puntosARestar = 10;
+        break;
     }
-    
-    return this.puntosMaximos * aciertos / 10 //el 10 representa el número máximo de aciertos
+
+    this.puntosARestar *= this.errores;
+    return (this.puntosMaximos * aciertos / 10) - this.puntosARestar
   }
 
   inicializarContador() {
@@ -267,6 +291,11 @@ export class PantallaComponent implements OnInit {
       }
     });
 
+  }
+
+
+  ngOnDestroy(): void {
+    this.juegoTerminado = true;
   }
 }
 
