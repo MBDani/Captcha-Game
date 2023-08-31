@@ -33,11 +33,8 @@ export class MenuPrincipalComponent implements OnInit {
   jugar(): void {
     if (this.formJugar.valid){
     this.unsplashService.getPhotosApi(this.formJugar.controls['imagen_correcta'].value).subscribe(correct_data => {
-      console.log(correct_data);
       this.unsplashService.getPhotosApi(this.formJugar.controls['imagen_incorrecta'].value).subscribe(incorrect_data => {
-        console.log(incorrect_data);
-        console.log(this.formJugar.controls['tiempo'].value);
-        this.router.navigate(['/pantalla', JSON.stringify(correct_data), JSON.stringify(incorrect_data), this.formJugar.controls['tiempo'].value]);
+        this.router.navigate(['/pantalla', this.formJugar.controls['tiempo'].value, this.formJugar.controls['imagen_correcta'].value, this.formJugar.controls['imagen_incorrecta'].value]);
       });
     },
       (error => {

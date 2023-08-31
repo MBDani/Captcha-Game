@@ -4,9 +4,8 @@
 
 export const environment = {
   production: false,
-  urlUnsplash:'https://api.unsplash.com/search',
+  urlUnsplash:'https://api.unsplash.com/search/photos',
   apiKey: 'oVTBrt7-KHgReoRnIAMmsN7iBrQa8cdtWzPqfwKTgDM'
-
 };
 
 /*

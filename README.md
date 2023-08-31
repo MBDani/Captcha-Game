@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Description
+
+<p>Elige dos palabras y comprueba si eres capaz de localizar todas las imágenes correctas antes de que acabe el tiempo</p>
+<p> ¡Cuanto menos tiempo te pongas mayor será la puntuación que podrás alcanzar! </p>
+
+## Images
+
+### Menu
+<img src="./src/assets/imagenes/menu.png" height="700px" width="900px">
+
+### Game
+<img src="./src/assets/imagenes/game.png" height="700px" width="900px">
+
+### Result
+<img src="./src/assets/imagenes/result.png" height="700px" width="900px">
